@@ -2,6 +2,8 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
+import { authURL } from '../env'
+
 import { Form } from 'react-bootstrap'
 
 import HeaderBack from '../components/HeaderBack'
@@ -27,9 +29,8 @@ const ProfileScreen = ({ history }) => {
     e.preventDefault()
 
     // parent
-    if (parentInfo) {
-      dispatch(parentLogout())
-    }
+    dispatch(parentLogout())
+    window.location.replace(authURL + '/#/logout')
   }
 
   useEffect(() => {

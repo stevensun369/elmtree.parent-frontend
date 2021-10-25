@@ -26,9 +26,8 @@ import {
   PARENT_TERM_MARKS_SUCCESS,
   PARENT_TERM_MARKS_FAIL,
 } from '../constants/parentConstants'
-// import apiURL from '../apiURL'
+import { apiURL } from '../env'
 import axios from 'axios'
-const apiURL = 'http://localhost:1000'
 
 export const register =
   (cnp, lastName, firstName, password) => async (dispatch) => {

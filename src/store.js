@@ -10,6 +10,10 @@ import {
   parentAverageMarksReducer,
   parentTermMarksReducer,
 } from './reducers/parentReducers'
+import { getAverageMarks } from './utils/averageMarks'
+import { getTermMarks } from './utils/termMarks'
+import { authURL } from './env'
+import { getStudents } from './utils/students'
 
 const reducer = combineReducers({
   // parent reducers
@@ -75,11 +79,9 @@ window.onload = () => {
   let requestData
   window.onmessage = (e) => {
     requestData = e.data
-    console.log(requestData.userType)
 
     if (requestData.userType !== 'parent' && requestData.userType) {
-      window.location.replace('https://google.com')
-      // alert('not teacher')
+      window.location.replace(authURL + '/#/')
     }
 
     var teacherID = localStorage.getItem('userInfo')
@@ -93,6 +95,9 @@ window.onload = () => {
         type: 'PARENT_READ_LS',
         payload: JSON.parse(requestData.userInfo),
       })
+      getAverageMarks(store.dispatch, store.getState)
+      getTermMarks(store.dispatch, store.getState)
+      getStudents(store.dispatch, store.getState)
     }
   }
 }

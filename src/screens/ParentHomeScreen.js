@@ -25,24 +25,26 @@ const ParentHomeScreen = ({ history }) => {
     (state) => state.parentAverageMarks
   )
   const { averageMarks } = parentAverageMarks
+  console.log(averageMarks)
 
   const parentTermMarks = useSelector(
     (state) => state.parentTermMarks
   )
   const { termMarks } = parentTermMarks
+  console.log(averageMarks)
 
   useEffect(() => {
     dispatch(addStudentDelete())
     if (
-      Object.keys(termMarks).length === 0 &&
-      students.length !== 0
+      Object.keys(termMarks).length === 0
+      // students.length !== 0
     ) {
       dispatch(parentGetTermMarks())
     }
 
     if (
-      Object.keys(averageMarks).length === 0 &&
-      students.length !== 0
+      Object.keys(averageMarks).length === 0
+      // students.length !== 0
     ) {
       dispatch(parentGetAverageMarks())
     }
@@ -60,22 +62,30 @@ const ParentHomeScreen = ({ history }) => {
                 {students.length !== 0 ? (
                   <>
                     <div className='list-divider'></div>
-                    {Object.keys(termMarks).length === 0 && (
-                      <Loader />
+                    {termMarks && (
+                      <>
+                        {Object.keys(termMarks).length === 0 && (
+                          <Loader />
+                        )}
+                      </>
                     )}
                     {students.map((item) => (
                       <>
-                        {Object.keys(termMarks).length !== 0 && (
-                          <SubjectItem
-                            linkTo={`/parinte/${item.studentID}`}
-                            key={item.studentID}
-                            averageMarkTermOne={
-                              termMarks[item.studentID][0]
-                            }
-                            averageMarkTermTwo={
-                              termMarks[item.studentID][1]
-                            }
-                          >{`${item.grade.gradeNumber}${item.grade.gradeLetter} - ${item.firstName} ${item.lastName}`}</SubjectItem>
+                        {termMarks && (
+                          <>
+                            {Object.keys(termMarks).length !== 0 && (
+                              <SubjectItem
+                                linkTo={`/parinte/${item.studentID}`}
+                                key={item.studentID}
+                                averageMarkTermOne={
+                                  termMarks[item.studentID][0]
+                                }
+                                averageMarkTermTwo={
+                                  termMarks[item.studentID][1]
+                                }
+                              >{`${item.grade.gradeNumber}${item.grade.gradeLetter} - ${item.firstName} ${item.lastName}`}</SubjectItem>
+                            )}
+                          </>
                         )}
                       </>
                     ))}
