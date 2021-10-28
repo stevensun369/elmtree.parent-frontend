@@ -35,20 +35,21 @@ const ParentHomeScreen = ({ history }) => {
 
   useEffect(() => {
     dispatch(addStudentDelete())
-    if (
-      Object.keys(termMarks).length === 0
-      // students.length !== 0
-    ) {
+  }, [dispatch])
+
+  const termMarksLength = Object.keys(termMarks).length
+  useEffect(() => {
+    if (termMarksLength === 0 && students.length !== 0) {
       dispatch(parentGetTermMarks())
     }
+  }, [dispatch, termMarksLength, students.length])
 
-    if (
-      Object.keys(averageMarks).length === 0
-      // students.length !== 0
-    ) {
+  const averageMarksLength = Object.keys(averageMarks).length
+  useEffect(() => {
+    if (averageMarksLength === 0 && students.length !== 0) {
       dispatch(parentGetAverageMarks())
     }
-  }, [dispatch])
+  }, [dispatch, averageMarksLength, students.length])
 
   return (
     <>

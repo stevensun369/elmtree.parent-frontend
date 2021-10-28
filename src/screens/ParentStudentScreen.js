@@ -43,14 +43,14 @@ const ParentStudentScreen = ({ history, match }) => {
 
   useEffect(() => {
     dispatch(deleteMarksAndTruancys())
+  }, [dispatch])
 
-    if (
-      Object.keys(averageMarks).length === 0 &&
-      students.length !== 0
-    ) {
+  const averageMarksLength = Object.keys(averageMarks).length
+  useEffect(() => {
+    if (averageMarksLength === 0 && students.length !== 0) {
       dispatch(parentGetAverageMarks())
     }
-  }, [dispatch])
+  }, [dispatch, averageMarksLength, students.length])
 
   if (authorized) {
     return (

@@ -1,6 +1,6 @@
 let apiURL
 let authURL
-let env = 'dev'
+let env = process.env.REACT_APP_ENV
 
 if (env === 'dev') {
   apiURL = 'http://localhost:1000'

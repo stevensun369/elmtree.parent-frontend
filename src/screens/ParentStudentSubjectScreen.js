@@ -38,17 +38,17 @@ const ParentStudentSubjectScreen = ({ history, match }) => {
   }
 
   // average marks
-  const parentAverageMarks = useSelector((state) => state.parentAverageMarks)
+  const parentAverageMarks = useSelector(
+    (state) => state.parentAverageMarks
+  )
   const { averageMarks } = parentAverageMarks
 
-  var studentAverageMarks = averageMarks[match.params.studentID]
   var subjectAverageMarks = {}
 
   if (Object.keys(averageMarks).length !== 0) {
     subjectAverageMarks =
       averageMarks[match.params.studentID][match.params.subjectID]
   }
-  var student
 
   // marks and truancys
   const parentMarks = useSelector((state) => state.parentMarks)
@@ -74,28 +74,35 @@ const ParentStudentSubjectScreen = ({ history, match }) => {
 
   if (authorized && subjectAuthorized) {
     // average marks
-    var { averageMarkTermOne, averageMarkTermTwo } = sortAverageMarksByTerm(
-      subjectAverageMarks
-    )
+    var { averageMarkTermOne, averageMarkTermTwo } =
+      sortAverageMarksByTerm(subjectAverageMarks)
 
     // marks by term
     var { marksTermOne, marksTermTwo } = sortMarksByTerm(marksList)
 
     // truancys by term
-    var { truancysTermOne, truancysTermTwo } = sortTruancysByTerm(truancysList)
+    var { truancysTermOne, truancysTermTwo } =
+      sortTruancysByTerm(truancysList)
 
     // condition
     loadingCondition = parentMarks.loading && parentTruancys.loading
   }
 
   useEffect(() => {
-    dispatch(getMarksList(match.params.studentID, match.params.subjectID))
-    dispatch(getTruancysList(match.params.studentID, match.params.subjectID))
+    dispatch(
+      getMarksList(match.params.studentID, match.params.subjectID)
+    )
+    dispatch(
+      getTruancysList(match.params.studentID, match.params.subjectID)
+    )
+  }, [dispatch, match.params.studentID, match.params.subjectID])
 
-    if (Object.keys(averageMarks).length === 0) {
+  const averageMarksLength = Object.keys(averageMarks).length
+  useEffect(() => {
+    if (averageMarksLength === 0) {
       dispatch(parentGetAverageMarks())
     }
-  }, [dispatch, match.params.studentID, match.params.subjectID])
+  }, [dispatch, averageMarksLength])
 
   if (authorized && subjectAuthorized) {
     return (
@@ -121,7 +128,10 @@ const ParentStudentSubjectScreen = ({ history, match }) => {
                   marginBottom: '2vh',
                 }}
               >
-                <MarksTitle toAverageMark='' averageMark={averageMarkTermOne}>
+                <MarksTitle
+                  toAverageMark=''
+                  averageMark={averageMarkTermOne}
+                >
                   Note - Semestrul I
                 </MarksTitle>
                 {marksTermOne.length > 0 ? (
@@ -137,7 +147,9 @@ const ParentStudentSubjectScreen = ({ history, match }) => {
                     ))}
                   </>
                 ) : (
-                  <span className={styles.notExist}>Nu există note incă</span>
+                  <span className={styles.notExist}>
+                    Nu există note incă
+                  </span>
                 )}
 
                 <br></br>
@@ -173,7 +185,10 @@ const ParentStudentSubjectScreen = ({ history, match }) => {
                   marginBottom: '2vh',
                 }}
               >
-                <MarksTitle toAverageMark='' averageMark={averageMarkTermTwo}>
+                <MarksTitle
+                  toAverageMark=''
+                  averageMark={averageMarkTermTwo}
+                >
                   Note - Semestrul II
                 </MarksTitle>
                 {marksTermTwo.length > 0 ? (
@@ -189,7 +204,9 @@ const ParentStudentSubjectScreen = ({ history, match }) => {
                     ))}
                   </>
                 ) : (
-                  <span className={styles.notExist}>Nu există note incă</span>
+                  <span className={styles.notExist}>
+                    Nu există note incă
+                  </span>
                 )}
                 <br></br>
 
