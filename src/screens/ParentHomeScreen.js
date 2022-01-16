@@ -39,17 +39,27 @@ const ParentHomeScreen = ({ history }) => {
 
   const termMarksLength = Object.keys(termMarks).length
   useEffect(() => {
-    if (termMarksLength === 0 && students.length !== 0) {
-      dispatch(parentGetTermMarks())
+    if (parentLogin.students) {
+      if (
+        termMarksLength === 0 &&
+        parentLogin.students.length !== 0
+      ) {
+        dispatch(parentGetTermMarks())
+      }
     }
-  }, [dispatch, termMarksLength, students.length])
+  }, [dispatch, termMarksLength, parentLogin.students])
 
   const averageMarksLength = Object.keys(averageMarks).length
   useEffect(() => {
-    if (averageMarksLength === 0 && students.length !== 0) {
-      dispatch(parentGetAverageMarks())
+    if (parentLogin.students) {
+      if (
+        averageMarksLength === 0 &&
+        parentLogin.students.length !== 0
+      ) {
+        dispatch(parentGetAverageMarks())
+      }
     }
-  }, [dispatch, averageMarksLength, students.length])
+  }, [dispatch, averageMarksLength, parentLogin.students])
 
   return (
     <>

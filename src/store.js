@@ -9,6 +9,10 @@ import {
   parentTruancysReducer,
   parentAverageMarksReducer,
   parentTermMarksReducer,
+  parentStudentTimetableReducer,
+  parentStudentTimetableTeachersReducer,
+  parentStudentSchoolReducer,
+  parentFinalMarksReducer,
 } from './reducers/parentReducers'
 import { getAverageMarks } from './utils/averageMarks'
 import { getTermMarks } from './utils/termMarks'
@@ -22,6 +26,11 @@ const reducer = combineReducers({
   parentTruancys: parentTruancysReducer,
   parentAverageMarks: parentAverageMarksReducer,
   parentTermMarks: parentTermMarksReducer,
+  parentFinalMarks: parentFinalMarksReducer,
+  parentStudentTimetable: parentStudentTimetableReducer,
+  parentStudentTimetableTeachers:
+    parentStudentTimetableTeachersReducer,
+  parentStudentSchool: parentStudentSchoolReducer,
 })
 
 const userTypeFromStorage = localStorage.getItem('userType')

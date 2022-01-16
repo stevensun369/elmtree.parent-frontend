@@ -25,6 +25,18 @@ import {
   PARENT_TERM_MARKS_REQUEST,
   PARENT_TERM_MARKS_SUCCESS,
   PARENT_TERM_MARKS_FAIL,
+  PARENT_FINAL_MARKS_REQUEST,
+  PARENT_FINAL_MARKS_SUCCESS,
+  PARENT_FINAL_MARKS_FAIL,
+  PARENT_STUDENT_TIMETABLE_REQUEST,
+  PARENT_STUDENT_TIMETABLE_SUCCESS,
+  PARENT_STUDENT_TIMETABLE_FAIL,
+  PARENT_STUDENT_TIMETABLE_TEACHERS_REQUEST,
+  PARENT_STUDENT_TIMETABLE_TEACHERS_SUCCESS,
+  PARENT_STUDENT_TIMETABLE_TEACHERS_FAIL,
+  PARENT_STUDENT_SCHOOL_REQUEST,
+  PARENT_STUDENT_SCHOOL_SUCCESS,
+  PARENT_STUDENT_SCHOOL_FAIL,
 } from '../constants/parentConstants'
 import { apiURL } from '../env'
 import axios from 'axios'
@@ -377,6 +389,208 @@ export const parentGetTermMarks =
     } catch (error) {
       dispatch({
         type: PARENT_TERM_MARKS_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      })
+    }
+  }
+
+export const getFinalMarks =
+  (subjectID, studentID) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: PARENT_FINAL_MARKS_REQUEST,
+      })
+
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getState().parentLogin.token}`,
+        },
+      }
+
+      const { data } = await axios.get(
+        `${apiURL}/api/parent/final/${studentID}/${subjectID}`,
+        config
+      )
+
+      let finalMarkTermOne = {}
+      let finalMarkTermTwo = {}
+
+      for (let finalMark in data) {
+        if (data[finalMark].term === 1) {
+          finalMarkTermOne = data[finalMark]
+        }
+        if (data[finalMark].term === 2) {
+          finalMarkTermTwo = data[finalMark]
+        }
+      }
+
+      let finalMarks = {
+        1: finalMarkTermOne,
+        2: finalMarkTermTwo,
+      }
+
+      dispatch({
+        type: PARENT_FINAL_MARKS_SUCCESS,
+        payload: finalMarks,
+      })
+    } catch (error) {
+      dispatch({
+        type: PARENT_FINAL_MARKS_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      })
+    }
+  }
+
+export const getTimetable =
+  (studentID) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: PARENT_STUDENT_TIMETABLE_REQUEST,
+      })
+
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getState().parentLogin.token}`,
+        },
+      }
+
+      const { data } = await axios.get(
+        `${apiURL}/api/parent/timetable/${studentID}`,
+        config
+      )
+
+      var days = [1, 2, 3, 4, 5]
+      // var intervals = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+      var periods = {}
+
+      for (var dayKey in days) {
+        var day = days[dayKey]
+        periods[day] = {}
+      }
+
+      for (var key in data) {
+        var period = data[key]
+        periods[period.day][period.interval] = period
+      }
+
+      dispatch({
+        type: PARENT_STUDENT_TIMETABLE_SUCCESS,
+        payload: periods,
+      })
+    } catch (error) {
+      dispatch({
+        type: PARENT_STUDENT_TIMETABLE_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      })
+    }
+  }
+
+export const getTimetableTeachers =
+  (studentID) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: PARENT_STUDENT_TIMETABLE_TEACHERS_REQUEST,
+      })
+
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getState().parentLogin.token}`,
+        },
+      }
+
+      const { data } = await axios.get(
+        `${apiURL}/api/parent/timetable/${studentID}/teachers`,
+        config
+      )
+
+      // getting the parent login student
+      let students = getState().parentLogin.students
+      let student = {}
+      for (let studentIndex in students) {
+        if (students[studentIndex].studentID === studentID) {
+          student = students[studentIndex]
+        }
+      }
+      let subjectList = student.subjectList
+      let subjectIDList = []
+      for (let subject in subjectList) {
+        subjectIDList.push(subjectList[subject].subjectID)
+      }
+
+      var teachers = {}
+      for (var subjectID in subjectIDList) {
+        teachers[subjectIDList[subjectID]] = []
+      }
+
+      for (let subjectIDIndex in subjectIDList) {
+        let subjectID = subjectIDList[subjectIDIndex]
+        for (let teacherIndex in data) {
+          let teacher = data[teacherIndex]
+          for (let subjectIndex in teacher.subjectList) {
+            let subject = teacher.subjectList[subjectIndex]
+            if (subject.subjectID === subjectID) {
+              console.log(subject)
+              teachers[subject.subjectID].push(
+                teacher.firstName + ' ' + teacher.lastName
+              )
+            }
+          }
+        }
+      }
+
+      dispatch({
+        type: PARENT_STUDENT_TIMETABLE_TEACHERS_SUCCESS,
+        payload: teachers,
+      })
+    } catch (error) {
+      dispatch({
+        type: PARENT_STUDENT_TIMETABLE_TEACHERS_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      })
+    }
+  }
+
+export const getSchool =
+  (studentID) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: PARENT_STUDENT_SCHOOL_REQUEST,
+      })
+
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getState().parentLogin.token}`,
+        },
+      }
+
+      const { data } = await axios.get(
+        `${apiURL}/api/parent/school/${studentID}`,
+        config
+      )
+
+      dispatch({
+        type: PARENT_STUDENT_SCHOOL_SUCCESS,
+        payload: data,
+      })
+    } catch (error) {
+      dispatch({
+        type: PARENT_STUDENT_SCHOOL_FAIL,
         payload:
           error.response && error.response.data.message
             ? error.response.data.message

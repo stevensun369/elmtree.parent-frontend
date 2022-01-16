@@ -13,8 +13,10 @@ import TruancysTitle from '../components/TruancysTitle'
 
 import Mark from '../components/Mark'
 import Truancy from '../components/Truancy'
+import FinalMark from '../components/FinalMark'
 
 import {
+  getFinalMarks,
   getMarksList,
   getTruancysList,
   parentGetAverageMarks,
@@ -36,6 +38,11 @@ const ParentStudentSubjectScreen = ({ history, match }) => {
   if (!parentInfo) {
     history.push('/')
   }
+
+  // final marks
+  const { finalMarks } = useSelector(
+    (state) => state.parentFinalMarks
+  )
 
   // average marks
   const parentAverageMarks = useSelector(
@@ -95,6 +102,9 @@ const ParentStudentSubjectScreen = ({ history, match }) => {
     dispatch(
       getTruancysList(match.params.studentID, match.params.subjectID)
     )
+    dispatch(
+      getFinalMarks(match.params.subjectID, match.params.studentID)
+    )
   }, [dispatch, match.params.studentID, match.params.subjectID])
 
   const averageMarksLength = Object.keys(averageMarks).length
@@ -145,6 +155,10 @@ const ParentStudentSubjectScreen = ({ history, match }) => {
                         {item.value}
                       </Mark>
                     ))}
+
+                    {finalMarks[1] && (
+                      <FinalMark term={1} finalMarks={finalMarks} />
+                    )}
                   </>
                 ) : (
                   <span className={styles.notExist}>
@@ -202,6 +216,10 @@ const ParentStudentSubjectScreen = ({ history, match }) => {
                         {item.value}
                       </Mark>
                     ))}
+
+                    {finalMarks[2] && (
+                      <FinalMark term={2} finalMarks={finalMarks} />
+                    )}
                   </>
                 ) : (
                   <span className={styles.notExist}>

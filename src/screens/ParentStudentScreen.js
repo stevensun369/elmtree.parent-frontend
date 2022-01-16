@@ -9,6 +9,7 @@ import HeaderBack from '../components/HeaderBack'
 import NotAuthorized from '../components/NotAuthorized'
 import SubjectItem from '../components/SubjectItem'
 import { sortAverageMarks } from '../utils/parentSort'
+import { Link } from 'react-router-dom'
 
 const ParentStudentScreen = ({ history, match }) => {
   const dispatch = useDispatch()
@@ -62,6 +63,12 @@ const ParentStudentScreen = ({ history, match }) => {
         </HeaderBack>
         <div className='header-margin-bottom'></div>
         <div className='main-container'>
+          <Link to={`/orar/${match.params.studentID}`}>
+            <div className='toTimetable'>
+              <span>&gt;&gt; către orar</span>
+            </div>
+          </Link>
+          <div style={{ marginTop: '2vh' }}></div>
           {studentInfo && (
             <>
               <div className='list-divider'></div>

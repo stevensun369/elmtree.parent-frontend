@@ -26,6 +26,18 @@ import {
   PARENT_TERM_MARKS_REQUEST,
   PARENT_TERM_MARKS_SUCCESS,
   PARENT_TERM_MARKS_FAIL,
+  PARENT_FINAL_MARKS_REQUEST,
+  PARENT_FINAL_MARKS_SUCCESS,
+  PARENT_FINAL_MARKS_FAIL,
+  PARENT_STUDENT_TIMETABLE_REQUEST,
+  PARENT_STUDENT_TIMETABLE_SUCCESS,
+  PARENT_STUDENT_TIMETABLE_FAIL,
+  PARENT_STUDENT_TIMETABLE_TEACHERS_REQUEST,
+  PARENT_STUDENT_TIMETABLE_TEACHERS_SUCCESS,
+  PARENT_STUDENT_TIMETABLE_TEACHERS_FAIL,
+  PARENT_STUDENT_SCHOOL_REQUEST,
+  PARENT_STUDENT_SCHOOL_SUCCESS,
+  PARENT_STUDENT_SCHOOL_FAIL,
 } from '../constants/parentConstants'
 
 export const parentLoginReducer = (state = {}, action) => {
@@ -175,6 +187,70 @@ export const parentTermMarksReducer = (
       return { loading: false, termMarks: action.payload }
     case PARENT_TERM_MARKS_FAIL:
       return { loading: false, error: action.payload }
+    default:
+      return state
+  }
+}
+
+export const parentFinalMarksReducer = (
+  state = { finalMarks: {} },
+  action
+) => {
+  switch (action.type) {
+    case PARENT_FINAL_MARKS_REQUEST:
+      return { loading: true, finalMarks: {} }
+    case PARENT_FINAL_MARKS_SUCCESS:
+      return { loading: false, finalMarks: action.payload }
+    case PARENT_FINAL_MARKS_FAIL:
+      return { loading: false, error: action.payload, finalMarks: {} }
+    default:
+      return state
+  }
+}
+
+export const parentStudentTimetableReducer = (
+  state = { periods: [] },
+  action
+) => {
+  switch (action.type) {
+    case PARENT_STUDENT_TIMETABLE_REQUEST:
+      return { loading: true, periods: [] }
+    case PARENT_STUDENT_TIMETABLE_SUCCESS:
+      return { loading: false, periods: action.payload }
+    case PARENT_STUDENT_TIMETABLE_FAIL:
+      return { loading: false, error: action.payload, periods: [] }
+    default:
+      return state
+  }
+}
+
+export const parentStudentTimetableTeachersReducer = (
+  state = { teachers: {} },
+  action
+) => {
+  switch (action.type) {
+    case PARENT_STUDENT_TIMETABLE_TEACHERS_REQUEST:
+      return { loading: true, teachers: {} }
+    case PARENT_STUDENT_TIMETABLE_TEACHERS_SUCCESS:
+      return { loading: false, teachers: action.payload }
+    case PARENT_STUDENT_TIMETABLE_TEACHERS_FAIL:
+      return { loading: false, error: action.payload, teachers: {} }
+    default:
+      return state
+  }
+}
+
+export const parentStudentSchoolReducer = (
+  state = { school: {} },
+  action
+) => {
+  switch (action.type) {
+    case PARENT_STUDENT_SCHOOL_REQUEST:
+      return { loading: true, school: {} }
+    case PARENT_STUDENT_SCHOOL_SUCCESS:
+      return { loading: false, school: action.payload }
+    case PARENT_STUDENT_SCHOOL_FAIL:
+      return { loading: false, error: action.payload, school: {} }
     default:
       return state
   }

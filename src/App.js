@@ -14,6 +14,7 @@ import ProfileScreen from './screens/ProfileScreen'
 
 // parent update action
 import { parentUpdate } from './actions/parentActions'
+import TimetableScreen from './screens/TimetableScreen'
 
 function App() {
   const dispatch = useDispatch()
@@ -29,6 +30,11 @@ function App() {
   return (
     <Router>
       {/* parinte */}
+      <Route
+        path='/orar/:studentID'
+        component={TimetableScreen}
+        exact
+      />
       <Route path='/adauga' component={ParentAddStudent} exact />
       <Route path='/' component={ParentIndex} exact />
       <Route path='/parinte' component={ParentHomeScreen} exact />
