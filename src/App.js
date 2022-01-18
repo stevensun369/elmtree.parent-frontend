@@ -2,6 +2,8 @@ import React, { useEffect } from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 
+import { authURL } from './env'
+
 // parent
 import ParentIndex from './screens/ParentIndex'
 import ParentHomeScreen from './screens/ParentHomeScreen'
@@ -28,30 +30,39 @@ function App() {
   }, [dispatch, parentLogin.parentInfo])
 
   return (
-    <Router>
-      {/* parinte */}
-      <Route
-        path='/orar/:studentID'
-        component={TimetableScreen}
-        exact
-      />
-      <Route path='/adauga' component={ParentAddStudent} exact />
-      <Route path='/' component={ParentIndex} exact />
-      <Route path='/parinte' component={ParentHomeScreen} exact />
-      <Route
-        path='/parinte/:studentID'
-        component={ParentStudentScreen}
-        exact
-      />
-      <Route
-        path='/parinte/:studentID/:subjectID'
-        component={ParentStudentSubjectScreen}
-        exact
-      />
+    <>
+      <iframe
+        src={`${authURL}/#/auth`}
+        frameborder='0'
+        width='0'
+        height='0'
+        title='auth'
+      ></iframe>
+      <Router>
+        {/* parinte */}
+        <Route
+          path='/orar/:studentID'
+          component={TimetableScreen}
+          exact
+        />
+        <Route path='/adauga' component={ParentAddStudent} exact />
+        <Route path='/' component={ParentIndex} exact />
+        <Route path='/parinte' component={ParentHomeScreen} exact />
+        <Route
+          path='/parinte/:studentID'
+          component={ParentStudentScreen}
+          exact
+        />
+        <Route
+          path='/parinte/:studentID/:subjectID'
+          component={ParentStudentSubjectScreen}
+          exact
+        />
 
-      {/* profil */}
-      <Route path='/profil' component={ProfileScreen} exact />
-    </Router>
+        {/* profil */}
+        <Route path='/profil' component={ProfileScreen} exact />
+      </Router>
+    </>
   )
 }
 
