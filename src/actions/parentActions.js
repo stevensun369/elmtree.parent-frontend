@@ -6,7 +6,7 @@ import {
   PARENT_LOGIN_SUCCESS,
   PARENT_LOGIN_FAIL,
   PARENT_LOGOUT,
-  PARENT_STUDENTS_UPDATE,
+  PARENT_UPDATE,
   PARENT_ADD_STUDENT_REQUEST,
   PARENT_ADD_STUDENT_SUCCESS,
   PARENT_ADD_STUDENT_FAIL,
@@ -140,7 +140,7 @@ export const parentUpdate = () => async (dispatch, getState) => {
     )
 
     dispatch({
-      type: PARENT_STUDENTS_UPDATE,
+      type: PARENT_UPDATE,
       payload: data,
     })
 

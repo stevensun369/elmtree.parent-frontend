@@ -6,7 +6,7 @@ import {
   PARENT_LOGIN_SUCCESS,
   PARENT_LOGIN_FAIL,
   PARENT_LOGOUT,
-  PARENT_STUDENTS_UPDATE,
+  PARENT_UPDATE,
   PARENT_READ_LS,
   PARENT_ADD_STUDENT_REQUEST,
   PARENT_ADD_STUDENT_SUCCESS,
@@ -84,7 +84,7 @@ export const parentLoginReducer = (state = {}, action) => {
       return { loading: false, error: action.payload }
 
     // students
-    case PARENT_STUDENTS_UPDATE:
+    case PARENT_UPDATE:
       return {
         ...state,
         students: action.payload.students,

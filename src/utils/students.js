@@ -1,4 +1,4 @@
-import { PARENT_STUDENTS_UPDATE } from '../constants/parentConstants'
+import { PARENT_UPDATE } from '../constants/parentConstants'
 import axios from 'axios'
 import { apiURL } from '../env'
 
@@ -19,7 +19,7 @@ export const getStudents = async (dispatch, getState) => {
     )
 
     dispatch({
-      type: PARENT_STUDENTS_UPDATE,
+      type: PARENT_UPDATE,
       payload: data,
     })
 
