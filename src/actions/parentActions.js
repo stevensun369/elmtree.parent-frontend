@@ -135,7 +135,7 @@ export const parentUpdate = () => async (dispatch, getState) => {
     var ls = JSON.parse(localStorage.getItem('userInfo'))
 
     const { data } = await axios.get(
-      `${apiURL}/api/parent/students`,
+      `${apiURL}/api/parent/update`,
       config
     )
 
@@ -222,7 +222,7 @@ export const getMarksList =
       }
 
       const { data } = await axios.get(
-        `${apiURL}/api/parent/mark/${studentID}/${subjectID}`,
+        `${apiURL}/api/parent/marks/${studentID}/${subjectID}`,
         config
       )
 
@@ -256,7 +256,7 @@ export const getTruancysList =
       }
 
       const { data } = await axios.get(
-        `${apiURL}/api/parent/truancy/${studentID}/${subjectID}`,
+        `${apiURL}/api/parent/truancies/${studentID}/${subjectID}`,
         config
       )
 
@@ -290,7 +290,7 @@ export const parentGetAverageMarks =
       }
 
       const { data } = await axios.get(
-        `${apiURL}/api/parent/average`,
+        `${apiURL}/api/parent/averagemarks`,
         config
       )
 
@@ -354,7 +354,7 @@ export const parentGetTermMarks =
       }
 
       const { data } = await axios.get(
-        `${apiURL}/api/parent/term`,
+        `${apiURL}/api/parent/termmarks`,
         config
       )
 
@@ -412,7 +412,7 @@ export const getFinalMarks =
       }
 
       const { data } = await axios.get(
-        `${apiURL}/api/parent/final/${studentID}/${subjectID}`,
+        `${apiURL}/api/parent/finalmarks/${studentID}/${subjectID}`,
         config
       )
 
