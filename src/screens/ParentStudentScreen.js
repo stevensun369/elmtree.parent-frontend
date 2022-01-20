@@ -10,6 +10,7 @@ import NotAuthorized from '../components/NotAuthorized'
 import SubjectItem from '../components/SubjectItem'
 import { sortAverageMarks } from '../utils/parentSort'
 import { Link } from 'react-router-dom'
+import styles from '../css/TeacherHomeroomStudentScreen.module.css'
 
 const ParentStudentScreen = ({ history, match }) => {
   const dispatch = useDispatch()
@@ -38,6 +39,10 @@ const ParentStudentScreen = ({ history, match }) => {
     (state) => state.parentAverageMarks
   )
   const { averageMarks } = parentAverageMarks
+
+  const parentTermMarks = useSelector(
+    (state) => state.parentTermMarks
+  )
 
   const studentAverageMarks = averageMarks[match.params.studentID]
   var subjectAverageMarks = sortAverageMarks(studentAverageMarks)
@@ -69,6 +74,70 @@ const ParentStudentScreen = ({ history, match }) => {
             </div>
           </Link>
           <div style={{ marginTop: '2vh' }}></div>
+
+          <span className={styles.termMarksTitle}>
+            Mediile Semestriale:
+          </span>
+          <div
+            className={styles.termMarks}
+            style={{ marginBottom: '3vh', width: '98%' }}
+          >
+            <div key='1' className={styles.termMarksTermContainer}>
+              <div className={styles.termMarksTerm}>
+                <div className={styles.termMarksTermSpan}>
+                  Sem. I:
+                </div>
+                <div className={styles.termMark}>
+                  <span className={styles.termMarkSpan}>
+                    {parentTermMarks.termMarks[
+                      match.params.studentID
+                    ][0] !== 0 &&
+                    parentTermMarks.termMarks[
+                      match.params.studentID
+                    ][0] ? (
+                      <>
+                        {
+                          parentTermMarks.termMarks[
+                            match.params.studentID
+                          ][0]
+                        }
+                      </>
+                    ) : (
+                      <>-</>
+                    )}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div key='2' className={styles.termMarksTermContainer}>
+              <div className={styles.termMarksTerm}>
+                <div className={styles.termMarksTermSpan}>
+                  Sem. II:
+                </div>
+                <div className={styles.termMark}>
+                  <span className={styles.termMarkSpan}>
+                    {parentTermMarks.termMarks[
+                      match.params.studentID
+                    ][1] !== 0 &&
+                    parentTermMarks.termMarks[
+                      match.params.studentID
+                    ][1] ? (
+                      <>
+                        {
+                          parentTermMarks.termMarks[
+                            match.params.studentID
+                          ][1]
+                        }
+                      </>
+                    ) : (
+                      <>-</>
+                    )}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
           {studentInfo && (
             <>
               <div className='list-divider'></div>
