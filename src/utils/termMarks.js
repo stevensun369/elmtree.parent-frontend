@@ -20,7 +20,7 @@ export const getTermMarks = async (dispatch, getState) => {
     }
 
     const { data } = await axios.get(
-      `${apiURL}/api/parent/term`,
+      `${apiURL}/api/parent/termmarks`,
       config
     )
 

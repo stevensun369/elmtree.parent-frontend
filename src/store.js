@@ -17,7 +17,7 @@ import {
 import { getAverageMarks } from './utils/averageMarks'
 import { getTermMarks } from './utils/termMarks'
 import { authURL } from './env'
-import { getStudents } from './utils/students'
+import { update } from './utils/update'
 
 const reducer = combineReducers({
   // parent reducers
@@ -106,7 +106,7 @@ window.onload = () => {
       })
       getAverageMarks(store.dispatch, store.getState)
       getTermMarks(store.dispatch, store.getState)
-      getStudents(store.dispatch, store.getState)
+      update(store.dispatch, store.getState)
     }
   }
 }

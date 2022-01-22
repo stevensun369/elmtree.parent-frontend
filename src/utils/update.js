@@ -2,7 +2,7 @@ import { PARENT_UPDATE } from '../constants/parentConstants'
 import axios from 'axios'
 import { apiURL } from '../env'
 
-export const getStudents = async (dispatch, getState) => {
+export const update = async (dispatch, getState) => {
   try {
     const config = {
       headers: {
@@ -14,7 +14,7 @@ export const getStudents = async (dispatch, getState) => {
     var ls = JSON.parse(localStorage.getItem('userInfo'))
 
     const { data } = await axios.get(
-      `${apiURL}/api/parent/students`,
+      `${apiURL}/api/parent/update`,
       config
     )
 
