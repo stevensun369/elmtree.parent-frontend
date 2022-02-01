@@ -1,10 +1,4 @@
 import {
-  PARENT_REGISTER_REQUEST,
-  PARENT_REGISTER_SUCCESS,
-  PARENT_REGISTER_FAIL,
-  PARENT_LOGIN_REQUEST,
-  PARENT_LOGIN_SUCCESS,
-  PARENT_LOGIN_FAIL,
   PARENT_LOGOUT,
   PARENT_UPDATE,
   PARENT_ADD_STUDENT_REQUEST,
@@ -40,79 +34,6 @@ import {
 } from '../constants/parentConstants'
 import { apiURL } from '../env'
 import axios from 'axios'
-
-export const register =
-  (cnp, lastName, firstName, password) => async (dispatch) => {
-    try {
-      dispatch({
-        type: PARENT_REGISTER_REQUEST,
-      })
-
-      const config = {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-
-      const { data } = await axios.post(
-        `${apiURL}/api/parent/register`,
-        { cnp, lastName, firstName, password },
-        config
-      )
-
-      dispatch({
-        type: PARENT_REGISTER_SUCCESS,
-        payload: data,
-      })
-
-      localStorage.setItem('userInfo', JSON.stringify(data))
-      localStorage.setItem('userType', 'parent')
-    } catch (error) {
-      dispatch({
-        type: PARENT_REGISTER_FAIL,
-        payload:
-          error.response && error.response.data.message
-            ? error.response.data.message
-            : error.message,
-      })
-    }
-  }
-
-export const login = (cnp, password) => async (dispatch) => {
-  try {
-    dispatch({
-      type: PARENT_LOGIN_REQUEST,
-    })
-
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    }
-
-    const { data } = await axios.post(
-      `${apiURL}/api/parent/login`,
-      { cnp, password },
-      config
-    )
-
-    dispatch({
-      type: PARENT_LOGIN_SUCCESS,
-      payload: data,
-    })
-
-    localStorage.setItem('userInfo', JSON.stringify(data))
-    localStorage.setItem('userType', 'parent')
-  } catch (error) {
-    dispatch({
-      type: PARENT_LOGIN_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    })
-  }
-}
 
 export const parentLogout = () => async (dispatch) => {
   dispatch({
@@ -151,7 +72,7 @@ export const parentUpdate = () => async (dispatch, getState) => {
 }
 
 export const addStudent =
-  (studentCNP, studentID) => async (dispatch, getState) => {
+  (studentID) => async (dispatch, getState) => {
     try {
       dispatch({
         type: PARENT_ADD_STUDENT_REQUEST,
@@ -168,7 +89,7 @@ export const addStudent =
 
       const { data } = await axios.put(
         `${apiURL}/api/parent/students`,
-        { studentCNP, studentID },
+        { studentID },
         config
       )
 

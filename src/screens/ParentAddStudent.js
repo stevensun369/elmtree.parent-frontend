@@ -6,7 +6,6 @@ import { addStudent } from '../actions/parentActions'
 
 import HeaderBack from '../components/HeaderBack'
 import Loader from '../components/Loader'
-import Message from '../components/Message'
 import { Form } from 'react-bootstrap'
 
 import styles from '../css/TeacherAddMarkScreen.module.css'
@@ -28,12 +27,11 @@ const ParentAddStudent = ({ history }) => {
     history.push('/')
   }
 
-  const [studentCNP, setStudentCNP] = useState('')
   const [studentID, setStudentID] = useState('')
 
   const submitHandler = (e) => {
     e.preventDefault()
-    dispatch(addStudent(studentCNP, studentID))
+    dispatch(addStudent(studentID))
   }
 
   useEffect(() => {
@@ -57,19 +55,8 @@ const ParentAddStudent = ({ history }) => {
               <input
                 type='number'
                 className={styles.inputValue}
-                name='studentCNP'
-                placeholder='CNP-ul elevului'
-                value={studentCNP}
-                onChange={(e) => {
-                  setStudentCNP(e.target.value)
-                }}
-              />
-
-              <input
-                type='number'
-                className={styles.inputValue}
                 name='studentID'
-                placeholder='Codul elevului'
+                placeholder='ID-ul elevului'
                 value={studentID}
                 onChange={(e) => {
                   setStudentID(e.target.value)
@@ -77,37 +64,10 @@ const ParentAddStudent = ({ history }) => {
               />
               <br />
               <br />
-
-              {studentCNP.length > 13 && (
-                <Message variant='danger'>
-                  CNP-ul elevului are prea multe cifre
-                </Message>
-              )}
-              {studentCNP.length < 13 && studentCNP.length !== 0 && (
-                <Message variant='danger'>
-                  CNP-ul elevului nu are îndeajuns de multe cifre
-                </Message>
-              )}
-              {studentID.length > 9 && (
-                <Message variant='danger'>
-                  Codul elevului are prea multe cifre
-                </Message>
-              )}
-              {studentID.length < 9 && studentID.length !== 0 && (
-                <Message variant='danger'>
-                  Codul elevului nu are îndeajuns de multe cifre
-                </Message>
-              )}
               <input
                 className={styles.submitButton}
                 type='submit'
                 value='Adăugați elevul'
-                disabled={
-                  studentCNP.length > 13 ||
-                  studentCNP.length < 13 ||
-                  studentID.length > 9 ||
-                  studentID.length < 9
-                }
               />
             </Form>
           </div>

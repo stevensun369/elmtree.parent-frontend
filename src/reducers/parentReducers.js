@@ -1,10 +1,4 @@
 import {
-  PARENT_REGISTER_REQUEST,
-  PARENT_REGISTER_SUCCESS,
-  PARENT_REGISTER_FAIL,
-  PARENT_LOGIN_REQUEST,
-  PARENT_LOGIN_SUCCESS,
-  PARENT_LOGIN_FAIL,
   PARENT_LOGOUT,
   PARENT_UPDATE,
   PARENT_READ_LS,
@@ -43,46 +37,6 @@ import {
 export const parentLoginReducer = (state = {}, action) => {
   var parentInfoDestructure
   switch (action.type) {
-    // parent register
-    case PARENT_REGISTER_REQUEST:
-      return { loading: true }
-    case PARENT_REGISTER_SUCCESS:
-      parentInfoDestructure = {
-        parentID: action.payload.parentID,
-        firstName: action.payload.firstName,
-        lastName: action.payload.lastName,
-        cnp: action.payload.cnp,
-        token: action.payload.token,
-      }
-      return {
-        loading: false,
-        parentInfo: parentInfoDestructure,
-        students: action.payload.students,
-      }
-
-    case PARENT_REGISTER_FAIL:
-      return { loading: false, error: action.payload }
-
-    // parent login
-    case PARENT_LOGIN_REQUEST:
-      return { loading: true }
-    case PARENT_LOGIN_SUCCESS:
-      parentInfoDestructure = {
-        parentID: action.payload.parentID,
-        firstName: action.payload.firstName,
-        lastName: action.payload.lastName,
-        cnp: action.payload.cnp,
-      }
-      return {
-        loading: false,
-        parentInfo: parentInfoDestructure,
-        students: action.payload.students,
-        token: action.payload.token,
-        addedStudentFlag: [],
-      }
-    case PARENT_LOGIN_FAIL:
-      return { loading: false, error: action.payload }
-
     // students
     case PARENT_UPDATE:
       return {
@@ -96,7 +50,6 @@ export const parentLoginReducer = (state = {}, action) => {
         parentID: action.payload.parentID,
         firstName: action.payload.firstName,
         lastName: action.payload.lastName,
-        cnp: action.payload.cnp,
       }
       return {
         loading: false,
