@@ -52,6 +52,7 @@ if (userTypeFromStorage === 'parent') {
     studentID: parentLoggedIn.studentID,
     firstName: parentLoggedIn.firstName,
     lastName: parentLoggedIn.lastName,
+    email: parentLoggedIn.email,
     // token: parentLoggedIn.token,
   }
   parentStudents = parentLoggedIn.students

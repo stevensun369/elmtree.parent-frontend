@@ -50,6 +50,7 @@ export const parentLoginReducer = (state = {}, action) => {
         parentID: action.payload.parentID,
         firstName: action.payload.firstName,
         lastName: action.payload.lastName,
+        email: action.payload.email,
       }
       return {
         loading: false,
